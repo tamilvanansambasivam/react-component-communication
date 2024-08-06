@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 
 function Parent() {
-  const data = "hello from parent";
+  const [data, setData] = useState("hello from parent");
 
-  return <Children message={data} />;
+  const handleDataChange = (newData) => {
+    setData(newData);
+  };
+
+  return (
+    <>
+      <h1>{data}</h1>
+      <Children handleClick={handleDataChange} />
+    </>
+  );
 }
 
-function Children({ message }) {
-  return <div>{message}</div>;
+function Children({ handleClick }) {
+  function handleClickFromChild() {
+    handleClick("new data from child");
+  }
+  return <button onClick={handleClickFromChild}>send data to parent</button>;
 }
 
 export default function App() {
